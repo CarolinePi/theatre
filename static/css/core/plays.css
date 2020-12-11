@@ -1,0 +1,46 @@
+.plays {
+	margin: 30px 15px 0;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+}
+
+.plays__item {
+	width: 30%;
+	margin-bottom: 15px;
+}
+
+.plays__inner {
+	text-align: center;
+	position: relative;
+}
+
+.plays__image {
+	max-height: 300px;
+	max-width: 100%;
+	display: block;
+
+	margin-bottom: 15px;
+}
+
+.plays__title {
+	text-decoration: none;
+
+	color: #333333;
+	text-transform: uppercase;
+	font-weight: 700;
+	font-size: 18px;
+}
+
+.play__buy {
+	display: flex;
+	justify-content: space-between;
+}
+
+.buy__item {
+	margin: auto 0;
+}
+
+
+
+

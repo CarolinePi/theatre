@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% block head %}
+    <link rel="stylesheet" href="{% static 'css/core/common.css' %}">
+    <link rel="stylesheet" href="{% static 'css/person.css' %}">
+{% endblock %}
+
+
+{% block content %}
+    <section class="section">
+        <div class="container">
+            <div class="section__header">
+                <h2 class="section__title">{% block header_title %}{% endblock %}</h2>
+            </div>
+
+            <div class="person">
+                <div class="person__inner">
+                    <div class="person__photo">
+                        <img class="person__image" src="{% block photo_source %}{% endblock %}">
+                    </div>
+                    <div class="person__info">
+                        <div class="person__title">{% block person_title %}{% endblock %}</div>
+                        <div class="person__desc">
+                            {% block description %}
+                            {% endblock %}
+                        </div>
+
+                        {% if perms.editable %}
+                            <div class="edit--person">
+                                <form>
+                                    {% csrf_token %}
+                                        <button type="submit" class="btn">
+                                            Edit
+                                        </button>
+                                        <button type="submit" class="btn">
+                                            Delete
+                                        </button>
+                                </form>
+                            </div>
+                        {% endif %}
+
+                    </div>
+                    <div class="person__performances">
+                        <div class="person__title">Performances</div>
+                        {% block performances %}
+                        {% endblock %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

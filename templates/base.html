@@ -1,0 +1,48 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://fonts.googleapis.com/css2?family=Kaushan+Script&family=Montserrat:ital,wght@0,400;0,700;1,300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+{% block head %} {% endblock %}
+    <title>{% block title %}{% endblock %}</title>
+</head>
+<body>
+
+    <header class="header">
+        <div class="container">
+            <div class="header__inner">
+                <div><a class="header__logo" href="{% url 'core:home' %}">Theatre</a></div>
+
+                <nav class="nav">
+                    <a class="nav__link" href="{% url 'core:plays' %}">Plays</a>
+                    <a class="nav__link" href="{% url 'core:about' %}">Мы</a>
+                    <a class="nav__link" href="#">Корзина</a>
+
+                    {% if user.is_authenticated  %}
+                        <a class="nav__link" href="#">{{ user.get_username }}</a>
+                        <form method="post" class="nav__link" action="{% url 'authentication:logout' %}">
+                        {% csrf_token %}
+                            <button class="nav__btn" type="submit">Log Out</button>
+                        </form>
+                    {% else %}
+                        <a class="nav__link" href="{% url 'authentication:login' %}">Log In</a>
+                        <a class="nav__link" href="{% url 'authentication:signup' %}">Sign up</a>
+                    {% endif %}
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <div class="page">
+        {% block content %}
+        {% endblock %}
+    </div>
+
+    <!--  #TODO: footer!!!! -->
+    <footer>
+        Footer
+    </footer>
+</body>
+</html>

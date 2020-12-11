@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+    <link rel="stylesheet" href="{% static 'css/core/plays.css' %}">
+    <link rel="stylesheet" href="{% static 'css/common.css' %}">
+{% endblock %}
+
+{% block title %}Plays{% endblock %}
+
+{% block content %}
+
+    <section class="section">
+        <div class="container">
+            <div class="section__header">
+                <h2 class="section__title">Plays</h2>
+            </div>
+
+            {% if perms.editable %}
+                <div class="edit">
+                    <form>
+                        {% csrf_token %}
+                        <button type="submit" class="btn">
+                            Edit
+                        </button>
+                    </form>
+                </div>
+            {% endif %}
+
+            <div class="plays">
+                {% for play in plays %}
+                    <div class="plays__item">
+                        <img class="plays__image" src="{% static play.performance.get_image_url %}">
+
+                        <div><a class="plays__title" href="{{ play.performance.get_absolute_url }}">{{ play.performance.title }}</a></div>
+                        <div class="play__buy">
+                            <div>
+                                <div>{{ play.performance.author }}</div>
+                                <div>{{ play.date }} at {{ play.time }}</div>
+                            </div>
+                            <form method="POST" class="buy__item">
+                                {% csrf_token %}
+                                <!--TODO: Write post method to redirect to necessary play-ticket-buy page-->
+                                <button type="submit" class="btn">
+                                    Buy ticket
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+
+{% endblock %}

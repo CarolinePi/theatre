@@ -1,0 +1,28 @@
+{% extends 'person_page.html' %}
+{% load static %}
+
+{% block head %}
+    <link rel="stylesheet" href="{% static 'css/common.css' %}">
+    <link rel="stylesheet" href="{% static 'css/person.css' %}">
+{% endblock %}
+{% block title %}{{ author }}{% endblock %}
+
+{% block header_title %}{{ author }}{% endblock %}
+{% block photo_source %}{% static author.get_image_url %}{% endblock %}
+
+{% block person_title %}{{ author }}{% endblock %}
+
+{% block description %}
+    {{ author.text }}
+{% endblock %}
+
+{% block performances %}
+{% for performance in performances %}
+    <div class="person__performance">
+        <img src="{% static performance.get_image_url %}">
+        <div>
+            <a  class="performance__name" href="{{ performance.get_absolute_url }}">{{ performance }}</a>
+        </div>
+    </div>
+{% endfor %}
+{% endblock %}

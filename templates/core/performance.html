@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+    <link rel="stylesheet" href="{% static 'css/core/performance.css' %}">
+    <link rel="stylesheet" href="{% static 'css/common.css' %}">
+{% endblock %}
+
+{% block title %}{{ performance }}{% endblock %}
+
+{% block content %}
+
+    <section class="section">
+        <div class="container">
+            <div class="section__header">
+                <h2 class="section__title">{{ performance.title }}</h2>
+                <h3 class="section_subtitle">A performance on {{ performance.author }}' play by {{ performance.director }}</h3>
+            </div>
+
+            {% if perms.editable %}
+                <div class="edit">
+                    <form>
+                        {% csrf_token %}
+                        <button type="submit" class="btn">
+                            Edit
+                        </button>
+                    </form>
+                </div>
+            {% endif %}
+
+            <div class="performance">
+                <div class="performance__inner">
+                    <div class="performance__item-left">
+                        <div class="performance__image">
+                            <img src="{% static performance.get_image_url %}">
+                        </div>
+                    </div>
+                    <div class="performance__item-rigth">
+                    <!-- TODO: Make beautiful description!  -->
+                        <div class="performance__description">
+                            <div class="performance__title">{{ performance.title }}</div>
+                            <div class="performance__text">
+                                {{ performance.description }}
+                            </div>
+                            <div class="performance__text">Director: <a href="{{ performance.director.get_absolute_url }}">{{ performance.director }}</a></div>
+                            <div class="performance__text">Author: <a href="{{ performance.author.get_absolute_url }}">{{ performance.author }}</a></div>
+                            <div class="performance__text">
+                                Actors:
+                                {% for role in roles %}
+                                    <a class="performance__text"><a href="{{ role.actor.get_absolute_url }}">{{ role.actor }}</a> as {{ role.title }}{% if forloop.last %}.{% else %},{% endif %}</a>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <div>
+                            <form method="POST" class="buy__item">
+                                {% csrf_token %}
+                                <!--TODO: Write post method to redirect to necessary play-ticket-buy page-->
+                                <button type="submit" class="buy__btn">
+                                    Buy ticket
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </section>
+    <p><b>{{ play.performance.title }}</b></p>
+    <p>{{ play.performance.author }}</p>
+{% endblock %}
