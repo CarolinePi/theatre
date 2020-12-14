@@ -35,5 +35,5 @@ class PasswordResetSet(View):
 
     def user_get(self, request):
         email = request.session['email']
-        user = User.objects.get(email=email)
+        user = User.objects.get(email=email) # не обработала ошибку, что нет юзера
         return user
