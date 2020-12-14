@@ -19,7 +19,7 @@ class PasswordResetView(View):
     def post(self, request):
         form = self.form(request.POST)
         if form.is_valid():
-            email = form.cleaned_data.get('email')
+            email = form.cleaned_data.get('email') # Та же херня, .get() возвратит None, если в form.cleaned_data не будет email
             try:
                 User.objects.get(email=email)
             except User.DoesNotExist:
@@ -28,7 +28,6 @@ class PasswordResetView(View):
 
             request.session['email'] = email
             return redirect(reverse('authentication:password-reset-set'))
-        else:
-            messages = ["you have entered invalid information"]
-            context = {'form': self.form, 'messages': messages}
-            return render(request, self.template_name, context=context)
+        messages = ["you have entered invalid information"]
+        context = {'form': self.form, 'messages': messages}
+        return render(request, self.template_name, context=context)
