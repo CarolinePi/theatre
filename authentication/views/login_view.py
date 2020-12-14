@@ -27,8 +27,7 @@ class LoginView(View):
             if user.is_active:
                 login(request, user)
                 return redirect('core:home')
-            else:
-                message = "Login is not active"
+            message = "Login is not active"
         else:
             message = "Wrong login or password"
 
