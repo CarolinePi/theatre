@@ -21,16 +21,19 @@ class PasswordChangeView(View, LoginRequiredMixin):
         form = self.form(request.user, request.POST)
         if form.is_valid():
             user = form.save()
-            password = form.cleaned_data.get('new_password1')
-            user.set_password(password)
-            user.save()
+            password = form.cleaned_data.get('new_password1') # Я хз валидируется ли на фронте эта штука, но тут может отдать None, если придет пустео поле
+            if password:
+                user.set_password(password)
+                user.save()
 
-            user = authenticate(username=user.username, password=password)
-            login(request, user)
-            return redirect('core:home')
+                user = authenticate(username=user.username, password=password)
+                login(request, user)
+                return redirect('core:home')
+            else:
+                messages = ['password is None']
         else:
             messages = list(form.error_messages.values())
-            form = self.form(request.user)
-        print(messages)
+            
+        form = self.form(request.user)
         context = {'form': form, 'messages': messages}
         return render(request, 'registration/password_change_form.html', context=context)
